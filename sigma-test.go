@@ -30,8 +30,6 @@ func main() {
 		paths = []string{"."}
 	}
 
-	fmt.Println("Test Path:", *fTestPath) // Debug output
-
 	configs, err := loadConfigs()
 	if err != nil {
 		fmt.Println(err)
@@ -40,7 +38,7 @@ func main() {
 
 	allPassed := true
 	for _, path := range paths {
-		pass, err := run(path, configs, *fRecursive, *fTestPath) // Pass test-path to run function
+		pass, err := run(path, configs, *fRecursive, *fTestPath)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -82,7 +80,7 @@ func run(root string, configs []sigma.Config, recursive bool, testPath string) (
 			return fmt.Errorf("error parsing %s: %w", path, err)
 		}
 
-		err, failures := testFile(path, rule, configs, testPath) // Pass test-path to testFile
+		err, failures := testFile(path, rule, configs, testPath)
 		if err != nil {
 			if errors.Is(err, errFailedTests) {
 				passed = false
